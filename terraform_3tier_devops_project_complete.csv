@@ -1,0 +1,53 @@
+File Path,Category,File Type,Description,Size (chars),Lines
+application/backend/Dockerfile,Application - Backend,directory,Container image definition,633,30
+application/backend/package.json,Application - Backend,json,Node.js project dependencies and scripts,917,39
+application/backend/server.js,Application - Backend,js,Express.js backend API server,7890,332
+application/frontend/Dockerfile,Application - Frontend,directory,Container image definition,1065,52
+application/frontend/Dockerfile.dev,Application - Frontend,dev,Container image definition,247,20
+application/frontend/nginx.conf,Application - Frontend,conf,NGINX web server configuration,1627,55
+application/frontend/package.json,Application - Frontend,json,Node.js project dependencies and scripts,1128,48
+application/frontend/public/index.html,Application - Frontend,html,Project configuration file,521,19
+application/frontend/src/App.css,Application - Frontend,css,Project configuration file,3882,260
+application/frontend/src/App.js,Application - Frontend,js,Main React.js application component,6506,206
+.github/workflows/terraform-apply.yml,CI/CD,yml,GitHub Actions workflow for Terraform deployment,1690,65
+.github/workflows/terraform-plan.yml,CI/CD,yml,GitHub Actions workflow for Terraform planning,2454,97
+docs/architecture.md,Documentation,md,Documentation file in Markdown format,7393,196
+docs/deployment.md,Documentation,md,Documentation file in Markdown format,8214,371
+.env.example,Root,example,Environment variables template,630,31
+.gitignore,Root,gitignore,Git ignore patterns for the project,824,88
+Makefile,Root,directory,Automation commands for development and deployment,3360,114
+README.md,Root,md,Main project documentation and setup guide,4479,157
+docker-compose.yml,Root,yml,Local development environment with Docker,2210,100
+scripts/deploy.sh,Scripts,sh,Automated deployment script for all environments,7641,300
+scripts/init.sql,Scripts,sql,Database initialization script with sample data,986,30
+scripts/setup-backend.sh,Scripts,sh,Script to initialize Terraform backend infrastructure,7342,264
+terraform/environments/dev/main.tf,Terraform Environment - Dev,tf,Main Terraform configuration file,3652,138
+terraform/environments/dev/outputs.tf,Terraform Environment - Dev,tf,Terraform output values definition,818,36
+terraform/environments/dev/terraform.tfvars,Terraform Environment - Dev,tfvars,Environment-specific Terraform variable values,789,27
+terraform/environments/dev/variables.tf,Terraform Environment - Dev,tf,Terraform input variables definition,2110,101
+terraform/environments/prod/main.tf,Terraform Environment - Prod,tf,Main Terraform configuration file,3656,138
+terraform/environments/prod/outputs.tf,Terraform Environment - Prod,tf,Terraform output values definition,818,36
+terraform/environments/prod/terraform.tfvars,Terraform Environment - Prod,tfvars,Environment-specific Terraform variable values,854,27
+terraform/environments/prod/variables.tf,Terraform Environment - Prod,tf,Terraform input variables definition,2110,101
+terraform/environments/staging/main.tf,Terraform Environment - Staging,tf,Main Terraform configuration file,3668,138
+terraform/environments/staging/outputs.tf,Terraform Environment - Staging,tf,Terraform output values definition,818,36
+terraform/environments/staging/terraform.tfvars,Terraform Environment - Staging,tfvars,Environment-specific Terraform variable values,795,27
+terraform/environments/staging/variables.tf,Terraform Environment - Staging,tf,Terraform input variables definition,2110,101
+terraform/modules/alb/main.tf,Terraform Module - Alb,tf,Main Terraform configuration file,5530,249
+terraform/modules/alb/outputs.tf,Terraform Module - Alb,tf,Terraform output values definition,884,35
+terraform/modules/alb/variables.tf,Terraform Module - Alb,tf,Terraform input variables definition,621,32
+terraform/modules/ecs/main.tf,Terraform Module - Ecs,tf,Main Terraform configuration file,8013,317
+terraform/modules/ecs/outputs.tf,Terraform Module - Ecs,tf,Terraform output values definition,865,40
+terraform/modules/ecs/variables.tf,Terraform Module - Ecs,tf,Terraform input variables definition,1475,77
+terraform/modules/monitoring/main.tf,Terraform Module - Monitoring,tf,Main Terraform configuration file,6914,233
+terraform/modules/monitoring/outputs.tf,Terraform Module - Monitoring,tf,Terraform output values definition,530,15
+terraform/modules/monitoring/variables.tf,Terraform Module - Monitoring,tf,Terraform input variables definition,733,37
+terraform/modules/rds/main.tf,Terraform Module - Rds,tf,Main Terraform configuration file,8613,291
+terraform/modules/rds/outputs.tf,Terraform Module - Rds,tf,Terraform output values definition,1280,46
+terraform/modules/rds/variables.tf,Terraform Module - Rds,tf,Terraform input variables definition,2455,121
+terraform/modules/security/main.tf,Terraform Module - Security,tf,Main Terraform configuration file,3995,191
+terraform/modules/security/outputs.tf,Terraform Module - Security,tf,Terraform output values definition,652,25
+terraform/modules/security/variables.tf,Terraform Module - Security,tf,Terraform input variables definition,413,22
+terraform/modules/vpc/main.tf,Terraform Module - Vpc,tf,Main Terraform configuration file,5135,214
+terraform/modules/vpc/outputs.tf,Terraform Module - Vpc,tf,Terraform output values definition,1048,45
+terraform/modules/vpc/variables.tf,Terraform Module - Vpc,tf,Terraform input variables definition,755,36
