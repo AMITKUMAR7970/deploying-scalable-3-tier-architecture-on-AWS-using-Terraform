@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps 3-Tier Web Application with Terraform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-cloud"></i> DevOps 3-Tier Web Application</h1>
+                <p>Complete Infrastructure as Code project deploying scalable 3-tier architecture on AWS using Terraform</p>
+            </div>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="overview">
+                <i class="fas fa-home"></i> Overview
+            </button>
+            <button class="tab-btn" data-tab="terraform">
+                <i class="fas fa-code"></i> Terraform
+            </button>
+            <button class="tab-btn" data-tab="cicd">
+                <i class="fas fa-cogs"></i> CI/CD
+            </button>
+            <button class="tab-btn" data-tab="aws">
+                <i class="fab fa-aws"></i> AWS Architecture
+            </button>
+            <button class="tab-btn" data-tab="modules">
+                <i class="fas fa-cubes"></i> Modules
+            </button>
+            <button class="tab-btn" data-tab="security">
+                <i class="fas fa-shield-alt"></i> Security
+            </button>
+            <button class="tab-btn" data-tab="deployment">
+                <i class="fas fa-rocket"></i> Deployment
+            </button>
+            <button class="tab-btn" data-tab="files">
+                <i class="fas fa-folder"></i> File Structure
+            </button>
+            <button class="tab-btn" data-tab="troubleshooting">
+                <i class="fas fa-tools"></i> Troubleshooting
+            </button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="section-header">
+                    <h2>Project Overview</h2>
+                    <p>Comprehensive DevOps project showcasing modern cloud infrastructure deployment</p>
+                </div>
+
+                <div class="architecture-diagram">
+                    <h3>3-Tier Architecture</h3>
+                    <pre class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                          FRONTEND TIER                          │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │   React.js  │    │   React.js  │    │   React.js  │        │
+│  │   EC2 t3    │    │   EC2 t3    │    │   EC2 t3    │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│           │                   │                   │            │
+│           └───────────────────┼───────────────────┘            │
+│                               │                                │
+│                    ┌─────────────────┐                        │
+│                    │ Application LB  │                        │
+│                    └─────────────────┘                        │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │
+┌─────────────────────────────┴───────────────────────────────────┐
+│                       APPLICATION TIER                         │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │  Node.js    │    │  Node.js    │    │  Node.js    │        │
+│  │  ECS Fargate│    │  ECS Fargate│    │  ECS Fargate│        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│           │                   │                   │            │
+│           └───────────────────┼───────────────────┘            │
+│                               │                                │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │
+┌─────────────────────────────┴───────────────────────────────────┐
+│                        DATABASE TIER                           │
+│              ┌─────────────┐    ┌─────────────┐                │
+│              │ RDS MySQL   │    │ RDS MySQL   │                │
+│              │ Primary     │────│ Standby     │                │
+│              │ Multi-AZ    │    │ Multi-AZ    │                │
+│              └─────────────┘    └─────────────┘                │
+└─────────────────────────────────────────────────────────────────┘
+                    </pre>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4><i class="fas fa-layer-group"></i> Tiers</h4>
+                        <div class="stat-value">3</div>
+                        <p>Frontend, Backend, Database</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4><i class="fas fa-server"></i> Environments</h4>
+                        <div class="stat-value">3</div>
+                        <p>Dev, Staging, Production</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4><i class="fas fa-cubes"></i> Modules</h4>
+                        <div class="stat-value">5</div>
+                        <p>VPC, ALB, ECS, RDS, Security</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4><i class="fas fa-shield-alt"></i> Security</h4>
+                        <div class="stat-value">100%</div>
+                        <p>Encrypted & Secured</p>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-code"></i>
+                        <h4>Infrastructure as Code</h4>
+                        <p>Complete Terraform configurations with modules and environments</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-cogs"></i>
+                        <h4>CI/CD Pipeline</h4>
+                        <p>Automated GitHub Actions workflows for testing and deployment</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Auto Scaling</h4>
+                        <p>Dynamic scaling based on load with health checks</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-eye"></i>
+                        <h4>Monitoring</h4>
+                        <p>CloudWatch integration with alerts and dashboards</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terraform Tab -->
+            <div id="terraform" class="tab-content">
+                <div class="section-header">
+                    <h2>Terraform Infrastructure</h2>
+                    <p>Infrastructure as Code configurations for AWS deployment</p>
+                </div>
+
+                <div class="env-tabs">
+                    <button class="env-tab active" data-env="root">Root Configuration</button>
+                    <button class="env-tab" data-env="dev">Development</button>
+                    <button class="env-tab" data-env="staging">Staging</button>
+                    <button class="env-tab" data-env="prod">Production</button>
+                </div>
+
+                <div class="terraform-content">
+                    <div id="env-root" class="env-content active">
+                        <h3>Root Terraform Configuration</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>terraform.tf</span>
+                                <button class="copy-btn" data-copy="root-terraform">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="root-terraform" class="language-hcl">terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  backend "s3" {
+    bucket         = "terraform-state-bucket"
+    key            = "3tier-app/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+  
+  default_tags {
+    tags = {
+      Project     = "3tier-webapp"
+      Environment = var.environment
+      ManagedBy   = "terraform"
+    }
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="env-dev" class="env-content">
+                        <h3>Development Environment</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>environments/dev/terraform.tfvars</span>
+                                <button class="copy-btn" data-copy="dev-vars">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="dev-vars" class="language-hcl">environment = "dev"
+aws_region  = "us-east-1"
+
+# VPC Configuration
+vpc_cidr = "10.0.0.0/16"
+public_subnet_cidrs = [
+  "10.0.1.0/24",
+  "10.0.2.0/24"
+]
+private_subnet_cidrs = [
+  "10.0.10.0/24",
+  "10.0.11.0/24"
+]
+
+# Database Configuration
+db_instance_class = "db.t3.micro"
+db_allocated_storage = 20
+db_name = "webapp_dev"
+
+# Application Configuration
+app_instance_type = "t3.micro"
+min_capacity = 1
+max_capacity = 3
+desired_capacity = 2</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="env-staging" class="env-content">
+                        <h3>Staging Environment</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>environments/staging/terraform.tfvars</span>
+                                <button class="copy-btn" data-copy="staging-vars">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="staging-vars" class="language-hcl">environment = "staging"
+aws_region  = "us-east-1"
+
+# VPC Configuration
+vpc_cidr = "10.1.0.0/16"
+public_subnet_cidrs = [
+  "10.1.1.0/24",
+  "10.1.2.0/24"
+]
+private_subnet_cidrs = [
+  "10.1.10.0/24",
+  "10.1.11.0/24"
+]
+
+# Database Configuration
+db_instance_class = "db.t3.small"
+db_allocated_storage = 50
+db_name = "webapp_staging"
+
+# Application Configuration
+app_instance_type = "t3.small"
+min_capacity = 2
+max_capacity = 6
+desired_capacity = 3</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="env-prod" class="env-content">
+                        <h3>Production Environment</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>environments/prod/terraform.tfvars</span>
+                                <button class="copy-btn" data-copy="prod-vars">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="prod-vars" class="language-hcl">environment = "prod"
+aws_region  = "us-east-1"
+
+# VPC Configuration
+vpc_cidr = "10.2.0.0/16"
+public_subnet_cidrs = [
+  "10.2.1.0/24",
+  "10.2.2.0/24",
+  "10.2.3.0/24"
+]
+private_subnet_cidrs = [
+  "10.2.10.0/24",
+  "10.2.11.0/24",
+  "10.2.12.0/24"
+]
+
+# Database Configuration
+db_instance_class = "db.r5.large"
+db_allocated_storage = 100
+db_name = "webapp_prod"
+multi_az = true
+backup_retention_period = 7
+
+# Application Configuration
+app_instance_type = "t3.medium"
+min_capacity = 3
+max_capacity = 10
+desired_capacity = 5</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CI/CD Tab -->
+            <div id="cicd" class="tab-content">
+                <div class="section-header">
+                    <h2>CI/CD Pipeline</h2>
+                    <p>Automated GitHub Actions workflows for infrastructure and application deployment</p>
+                </div>
+
+                <div class="pipeline-workflow">
+                    <h3>Workflow Overview</h3>
+                    <div class="workflow-diagram">
+                        <div class="workflow-step">
+                            <i class="fas fa-code-branch"></i>
+                            <h4>Pull Request</h4>
+                            <p>Terraform Plan</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-step">
+                            <i class="fas fa-check"></i>
+                            <h4>Code Review</h4>
+                            <p>Manual Approval</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-step">
+                            <i class="fas fa-play"></i>
+                            <h4>Merge to Main</h4>
+                            <p>Terraform Apply</p>
+                        </div>
+                        <div class="workflow-arrow">→</div>
+                        <div class="workflow-step">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Deploy App</h4>
+                            <p>Container Deployment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>.github/workflows/terraform-plan.yml</span>
+                        <button class="copy-btn" data-copy="terraform-plan">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <pre><code id="terraform-plan" class="language-yaml">name: 'Terraform Plan'
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths: ['terraform/**']
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, staging]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    
+    - name: Terraform Init
+      run: |
+        cd terraform/environments/${{ matrix.environment }}
+        terraform init
+    
+    - name: Terraform Plan
+      run: |
+        cd terraform/environments/${{ matrix.environment }}
+        terraform plan</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>.github/workflows/terraform-apply.yml</span>
+                        <button class="copy-btn" data-copy="terraform-apply">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <pre><code id="terraform-apply" class="language-yaml">name: 'Terraform Apply'
+
+on:
+  push:
+    branches: [ main ]
+    paths: ['terraform/**']
+
+jobs:
+  terraform-apply:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    
+    - name: Terraform Init
+      run: |
+        cd terraform/environments/${{ matrix.environment }}
+        terraform init
+    
+    - name: Terraform Apply
+      run: |
+        cd terraform/environments/${{ matrix.environment }}
+        terraform apply -auto-approve</code></pre>
+                </div>
+            </div>
+
+            <!-- AWS Architecture Tab -->
+            <div id="aws" class="tab-content">
+                <div class="section-header">
+                    <h2>AWS Architecture Components</h2>
+                    <p>Detailed breakdown of AWS services and configurations</p>
+                </div>
+
+                <div class="aws-services">
+                    <div class="service-category">
+                        <div class="category-header">
+                            <h3><i class="fas fa-network-wired"></i> Networking</h3>
+                        </div>
+                        <div class="service-list">
+                            <div class="service-item">
+                                <h4>VPC</h4>
+                                <p>Virtual Private Cloud with public and private subnets across multiple AZs</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>Internet Gateway</h4>
+                                <p>Provides internet access to public subnets</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>NAT Gateway</h4>
+                                <p>Enables outbound internet access for private subnets</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>Route Tables</h4>
+                                <p>Controls traffic routing between subnets</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-category">
+                        <div class="category-header">
+                            <h3><i class="fas fa-server"></i> Compute</h3>
+                        </div>
+                        <div class="service-list">
+                            <div class="service-item">
+                                <h4>Application Load Balancer</h4>
+                                <p>Layer 7 load balancing with health checks</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>Auto Scaling Groups</h4>
+                                <p>Automatic scaling based on demand</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>ECS Fargate</h4>
+                                <p>Serverless container hosting for backend</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>EC2 Instances</h4>
+                                <p>Virtual servers for frontend application</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-category">
+                        <div class="category-header">
+                            <h3><i class="fas fa-database"></i> Database</h3>
+                        </div>
+                        <div class="service-list">
+                            <div class="service-item">
+                                <h4>RDS MySQL</h4>
+                                <p>Managed relational database service</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>Multi-AZ Deployment</h4>
+                                <p>High availability with automatic failover</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>Automated Backups</h4>
+                                <p>Point-in-time recovery capabilities</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>DB Subnet Groups</h4>
+                                <p>Database placement in private subnets</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-category">
+                        <div class="category-header">
+                            <h3><i class="fas fa-shield-alt"></i> Security</h3>
+                        </div>
+                        <div class="service-list">
+                            <div class="service-item">
+                                <h4>Security Groups</h4>
+                                <p>Virtual firewalls controlling traffic</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>IAM Roles</h4>
+                                <p>Secure access management</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>KMS Encryption</h4>
+                                <p>Data encryption at rest and in transit</p>
+                            </div>
+                            <div class="service-item">
+                                <h4>VPC Flow Logs</h4>
+                                <p>Network traffic monitoring</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modules Tab -->
+            <div id="modules" class="tab-content">
+                <div class="section-header">
+                    <h2>Terraform Modules</h2>
+                    <p>Reusable infrastructure components for different environments</p>
+                </div>
+
+                <div class="module-tabs">
+                    <button class="module-tab active" data-module="vpc">VPC Module</button>
+                    <button class="module-tab" data-module="alb">ALB Module</button>
+                    <button class="module-tab" data-module="rds">RDS Module</button>
+                    <button class="module-tab" data-module="ecs">ECS Module</button>
+                    <button class="module-tab" data-module="security">Security Module</button>
+                </div>
+
+                <div class="module-content">
+                    <div id="module-vpc" class="module-section active">
+                        <h3>VPC Module - Networking Foundation</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>modules/vpc/main.tf</span>
+                                <button class="copy-btn" data-copy="vpc-module">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="vpc-module" class="language-hcl">resource "aws_vpc" "main" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-vpc"
+  })
+}
+
+resource "aws_subnet" "public" {
+  count = length(var.public_subnet_cidrs)
+  
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+  map_public_ip_on_launch = true
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-public-subnet-${count.index + 1}"
+    Type = "Public"
+  })
+}
+
+resource "aws_subnet" "private" {
+  count = length(var.private_subnet_cidrs)
+  
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = var.private_subnet_cidrs[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-private-subnet-${count.index + 1}"
+    Type = "Private"
+  })
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="module-alb" class="module-section">
+                        <h3>Application Load Balancer Module</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>modules/alb/main.tf</span>
+                                <button class="copy-btn" data-copy="alb-module">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="alb-module" class="language-hcl">resource "aws_lb" "main" {
+  name               = "${var.environment}-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb.id]
+  subnets            = var.public_subnet_ids
+  
+  enable_deletion_protection = var.environment == "prod" ? true : false
+  
+  tags = var.common_tags
+}
+
+resource "aws_lb_listener" "frontend" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = "80"
+  protocol          = "HTTP"
+  
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.frontend.arn
+  }
+}
+
+resource "aws_lb_target_group" "frontend" {
+  name     = "${var.environment}-frontend-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+  
+  health_check {
+    enabled             = true
+    healthy_threshold   = 2
+    interval            = 30
+    matcher             = "200"
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="module-rds" class="module-section">
+                        <h3>RDS Database Module</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>modules/rds/main.tf</span>
+                                <button class="copy-btn" data-copy="rds-module">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="rds-module" class="language-hcl">resource "aws_db_subnet_group" "main" {
+  name       = "${var.environment}-db-subnet-group"
+  subnet_ids = var.private_subnet_ids
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-db-subnet-group"
+  })
+}
+
+resource "aws_db_instance" "main" {
+  identifier = "${var.environment}-database"
+  
+  engine         = "mysql"
+  engine_version = "8.0"
+  instance_class = var.db_instance_class
+  
+  allocated_storage     = var.db_allocated_storage
+  max_allocated_storage = var.db_max_allocated_storage
+  
+  db_name  = var.db_name
+  username = var.db_username
+  password = var.db_password
+  
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  db_subnet_group_name   = aws_db_subnet_group.main.name
+  
+  backup_retention_period = var.environment == "prod" ? 7 : 1
+  multi_az               = var.environment == "prod" ? true : false
+  
+  skip_final_snapshot = var.environment != "prod"
+  
+  tags = var.common_tags
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="module-ecs" class="module-section">
+                        <h3>ECS Fargate Module</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>modules/ecs/main.tf</span>
+                                <button class="copy-btn" data-copy="ecs-module">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="ecs-module" class="language-hcl">resource "aws_ecs_cluster" "main" {
+  name = "${var.environment}-cluster"
+  
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+  
+  tags = var.common_tags
+}
+
+resource "aws_ecs_service" "backend" {
+  name            = "${var.environment}-backend"
+  cluster         = aws_ecs_cluster.main.id
+  task_definition = aws_ecs_task_definition.backend.arn
+  desired_count   = var.desired_count
+  launch_type     = "FARGATE"
+  
+  network_configuration {
+    subnets          = var.private_subnet_ids
+    security_groups  = [aws_security_group.ecs_tasks.id]
+    assign_public_ip = false
+  }
+  
+  load_balancer {
+    target_group_arn = var.target_group_arn
+    container_name   = "backend"
+    container_port   = 3000
+  }
+  
+  depends_on = [aws_lb_listener.backend]
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div id="module-security" class="module-section">
+                        <h3>Security Module</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>modules/security/main.tf</span>
+                                <button class="copy-btn" data-copy="security-module">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre><code id="security-module" class="language-hcl"># ALB Security Group
+resource "aws_security_group" "alb" {
+  name        = "${var.environment}-alb-sg"
+  description = "Security group for ALB"
+  vpc_id      = var.vpc_id
+  
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-alb-sg"
+  })
+}
+
+# ECS Tasks Security Group
+resource "aws_security_group" "ecs_tasks" {
+  name        = "${var.environment}-ecs-tasks-sg"
+  description = "Security group for ECS tasks"
+  vpc_id      = var.vpc_id
+  
+  ingress {
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.alb.id]
+  }
+  
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  tags = merge(var.common_tags, {
+    Name = "${var.environment}-ecs-tasks-sg"
+  })
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div id="security" class="tab-content">
+                <div class="section-header">
+                    <h2>Security & Monitoring</h2>
+                    <p>Security best practices and monitoring implementation</p>
+                </div>
+
+                <div class="security-grid">
+                    <div class="security-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Network Security</h4>
+                        <ul>
+                            <li>VPC with private subnets</li>
+                            <li>Security groups with least privilege</li>
+                            <li>Network ACLs for additional protection</li>
+                            <li>VPC Flow Logs enabled</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-card">
+                        <i class="fas fa-lock"></i>
+                        <h4>Data Encryption</h4>
+                        <ul>
+                            <li>EBS volumes encrypted with KMS</li>
+                            <li>RDS encryption at rest</li>
+                            <li>SSL/TLS for data in transit</li>
+                            <li>S3 bucket encryption</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-card">
+                        <i class="fas fa-user-shield"></i>
+                        <h4>Access Management</h4>
+                        <ul>
+                            <li>IAM roles with minimal permissions</li>
+                            <li>No hard-coded credentials</li>
+                            <li>AWS Systems Manager for secrets</li>
+                            <li>MFA for sensitive operations</li>
+                        </ul>
+                    </div>
+
+                    <div class="security-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Monitoring & Logging</h4>
+                        <ul>
+                            <li>CloudWatch metrics and alarms</li>
+                            <li>Application and infrastructure logs</li>
+                            <li>AWS CloudTrail for API logging</li>
+                            <li>SNS notifications for alerts</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="best-practices">
+                    <h3>Security Best Practices</h3>
+                    <div class="practices-list">
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Use remote state with state locking</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Implement least privilege access</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Tag all resources consistently</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Use modules for reusability</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Separate environments completely</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Enable logging and monitoring</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Implement automated backups</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Use encryption at rest and in transit</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Regular security reviews</span>
+                        </div>
+                        <div class="practice-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Disaster recovery planning</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deployment Tab -->
+            <div id="deployment" class="tab-content">
+                <div class="section-header">
+                    <h2>Deployment Guide</h2>
+                    <p>Step-by-step instructions for deploying the infrastructure</p>
+                </div>
+
+                <div class="deployment-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Clone Repository & Setup</h4>
+                            <p>Clone the repository and configure AWS credentials</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">git clone https://github.com/your-org/3tier-terraform-app.git
+cd 3tier-terraform-app
+aws configure</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Set up S3 Backend</h4>
+                            <p>Create S3 bucket and DynamoDB table for Terraform state</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">aws s3 mb s3://your-terraform-state-bucket
+aws dynamodb create-table \
+  --table-name terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Configure Environment Variables</h4>
+                            <p>Update terraform.tfvars files for each environment</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">cd terraform/environments/dev
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with your specific values</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Initialize Terraform</h4>
+                            <p>Initialize Terraform in the development environment</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">terraform init
+terraform validate</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Plan Infrastructure</h4>
+                            <p>Review the execution plan before applying changes</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">terraform plan -out=tfplan
+# Review the plan carefully</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Apply Configuration</h4>
+                            <p>Apply the Terraform configuration to create resources</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">terraform apply tfplan
+# Wait for resources to be created</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">7</div>
+                        <div class="step-content">
+                            <h4>Deploy Application</h4>
+                            <p>Deploy application code to ECS and EC2 instances</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">cd ../../..
+docker build -t backend-app ./backend
+docker tag backend-app:latest $ECR_REPO:latest
+docker push $ECR_REPO:latest</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">8</div>
+                        <div class="step-content">
+                            <h4>Configure Monitoring</h4>
+                            <p>Set up CloudWatch alarms and dashboards</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># CloudWatch alarms are automatically created
+# Access CloudWatch dashboard in AWS Console</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">9</div>
+                        <div class="step-content">
+                            <h4>Test Application</h4>
+                            <p>Verify that all tiers are working correctly</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">curl http://your-alb-dns-name/
+# Test frontend, backend API, and database connectivity</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">10</div>
+                        <div class="step-content">
+                            <h4>Set up CI/CD Pipeline</h4>
+                            <p>Configure GitHub Actions for automated deployments</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># Add secrets to GitHub repository:
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY
+# - DB_PASSWORD</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Structure Tab -->
+            <div id="files" class="tab-content">
+                <div class="section-header">
+                    <h2>Project File Structure</h2>
+                    <p>Complete directory structure and file organization</p>
+                </div>
+
+                <div class="file-tree">
+                    <div class="tree-node">
+                        <i class="fas fa-folder"></i> 3tier-terraform-app/
+                        <div class="tree-children">
+                            <div class="tree-node">
+                                <i class="fas fa-folder"></i> terraform/
+                                <div class="tree-children">
+                                    <div class="tree-node">
+                                        <i class="fas fa-folder"></i> environments/
+                                        <div class="tree-children">
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> dev/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> terraform.tfvars</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> backend.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> staging/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> terraform.tfvars</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> backend.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> prod/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> terraform.tfvars</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> backend.tf</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-node">
+                                        <i class="fas fa-folder"></i> modules/
+                                        <div class="tree-children">
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> vpc/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> alb/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> ecs/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> rds/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                </div>
+                                            </div>
+                                            <div class="tree-node">
+                                                <i class="fas fa-folder"></i> security/
+                                                <div class="tree-children">
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> main.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> variables.tf</div>
+                                                    <div class="tree-node"><i class="fas fa-file-code"></i> outputs.tf</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node">
+                                <i class="fas fa-folder"></i> .github/
+                                <div class="tree-children">
+                                    <div class="tree-node">
+                                        <i class="fas fa-folder"></i> workflows/
+                                        <div class="tree-children">
+                                            <div class="tree-node"><i class="fas fa-file-code"></i> terraform-plan.yml</div>
+                                            <div class="tree-node"><i class="fas fa-file-code"></i> terraform-apply.yml</div>
+                                            <div class="tree-node"><i class="fas fa-file-code"></i> deploy-app.yml</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-node">
+                                <i class="fas fa-folder"></i> frontend/
+                                <div class="tree-children">
+                                    <div class="tree-node"><i class="fas fa-file"></i> Dockerfile</div>
+                                    <div class="tree-node"><i class="fas fa-file"></i> package.json</div>
+                                    <div class="tree-node"><i class="fas fa-folder"></i> src/</div>
+                                    <div class="tree-node"><i class="fas fa-folder"></i> public/</div>
+                                </div>
+                            </div>
+                            <div class="tree-node">
+                                <i class="fas fa-folder"></i> backend/
+                                <div class="tree-children">
+                                    <div class="tree-node"><i class="fas fa-file"></i> Dockerfile</div>
+                                    <div class="tree-node"><i class="fas fa-file"></i> package.json</div>
+                                    <div class="tree-node"><i class="fas fa-folder"></i> src/</div>
+                                    <div class="tree-node"><i class="fas fa-folder"></i> config/</div>
+                                </div>
+                            </div>
+                            <div class="tree-node">
+                                <i class="fas fa-folder"></i> scripts/
+                                <div class="tree-children">
+                                    <div class="tree-node"><i class="fas fa-file-code"></i> deploy.sh</div>
+                                    <div class="tree-node"><i class="fas fa-file-code"></i> setup-backend.sh</div>
+                                    <div class="tree-node"><i class="fas fa-file-code"></i> cleanup.sh</div>
+                                </div>
+                            </div>
+                            <div class="tree-node"><i class="fas fa-file"></i> README.md</div>
+                            <div class="tree-node"><i class="fas fa-file"></i> .gitignore</div>
+                            <div class="tree-node"><i class="fas fa-file"></i> docker-compose.yml</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Tab -->
+            <div id="troubleshooting" class="tab-content">
+                <div class="section-header">
+                    <h2>Troubleshooting Guide</h2>
+                    <p>Common issues and their solutions</p>
+                </div>
+
+                <div class="troubleshooting-sections">
+                    <div class="trouble-section">
+                        <h3>Terraform Issues</h3>
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> State Lock Error</h4>
+                            <p><strong>Problem:</strong> Error acquiring the state lock</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">terraform force-unlock LOCK_ID</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Resource Already Exists</h4>
+                            <p><strong>Problem:</strong> Resource already exists in AWS</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">terraform import aws_instance.example i-1234567890abcdef0</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Invalid Credentials</h4>
+                            <p><strong>Problem:</strong> AWS credentials not configured properly</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">aws configure
+# Or set environment variables:
+export AWS_ACCESS_KEY_ID="your-access-key"
+export AWS_SECRET_ACCESS_KEY="your-secret-key"</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trouble-section">
+                        <h3>Infrastructure Issues</h3>
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Load Balancer Health Check Failures</h4>
+                            <p><strong>Problem:</strong> Targets failing health checks</p>
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Check security group rules</li>
+                                <li>Verify application is listening on correct port</li>
+                                <li>Check health check path configuration</li>
+                                <li>Review application logs</li>
+                            </ul>
+                        </div>
+
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Database Connection Issues</h4>
+                            <p><strong>Problem:</strong> Cannot connect to RDS instance</p>
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Verify security group allows traffic from application tier</li>
+                                <li>Check subnet group and VPC configuration</li>
+                                <li>Confirm database is in available state</li>
+                                <li>Validate connection string and credentials</li>
+                            </ul>
+                        </div>
+
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Auto Scaling Not Working</h4>
+                            <p><strong>Problem:</strong> Instances not scaling up/down</p>
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Check CloudWatch alarms configuration</li>
+                                <li>Verify scaling policies are attached</li>
+                                <li>Review IAM permissions for Auto Scaling</li>
+                                <li>Check metric thresholds and evaluation periods</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="trouble-section">
+                        <h3>CI/CD Issues</h3>
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> GitHub Actions Failing</h4>
+                            <p><strong>Problem:</strong> Workflow fails during execution</p>
+                            <p><strong>Solution:</strong></p>
+                            <ul>
+                                <li>Check GitHub secrets are properly configured</li>
+                                <li>Verify AWS credentials have necessary permissions</li>
+                                <li>Review workflow logs for specific errors</li>
+                                <li>Ensure Terraform backend is accessible</li>
+                            </ul>
+                        </div>
+
+                        <div class="trouble-item">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Docker Build Failures</h4>
+                            <p><strong>Problem:</strong> Container build fails</p>
+                            <p><strong>Solution:</strong></p>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># Test locally first
+docker build -t test-app .
+docker run --rm test-app
+
+# Check for dependency issues
+docker system prune
+docker build --no-cache -t test-app .</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trouble-section">
+                        <h3>Monitoring & Debugging</h3>
+                        <div class="debug-commands">
+                            <h4>Useful Debug Commands</h4>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># Check Terraform state
+terraform show
+terraform state list
+
+# AWS CLI debugging
+aws sts get-caller-identity
+aws ec2 describe-instances
+aws ecs describe-services --cluster your-cluster
+
+# CloudWatch logs
+aws logs describe-log-groups
+aws logs tail /aws/ecs/your-service --follow
+
+# Health checks
+curl -I http://your-alb-dns-name/health
+aws elbv2 describe-target-health --target-group-arn arn:aws:...</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
